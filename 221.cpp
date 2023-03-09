@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int maximalSquare(vector<vector<char>>& matrix) {
+        int h = matrix.size();
+        int w = matrix[0].size();
+        vector<vector<int>> dp(h, vector<int>(w));
+        if(matrix[0][0] == '1') dp[0][0] = 1;
+        else dp[0][0] = 0;
+
+
+        int res = 0;
+        for(int i = 0; i < h; i++){
+            for(int j = 0; j < w; j++){
+                if(matrix[i][j] == '0') dp[i][j] = 0;
+                else{
+                    if(i == 0 || j == 0) dp[i][j] = 1;
+                    else dp[i][j] = min(min(dp[i-1][j], dp[i][j-1]), dp[i-1][j-1]) + 1;
+                }
+                res = max(res, dp[i][j]);
+            }
+        }
+        return res*res;
+    }
+};
